@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ScanResult } from "@uxbeacon/shared-types";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScoreGrade } from "./ScoreGrade";
@@ -163,31 +163,37 @@ export function ScanResultsView({ result }: Props) {
 
         {/* Detail tabs */}
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="mb-6 w-full bg-gray-100 rounded-2xl p-1 h-[76px] flex gap-0.5">
-            {[
-              { value: "overview",       label: "Overview",      icon: LayoutDashboard, score: null },
-              { value: "heuristics",     label: "Heuristics",    icon: ListChecks,      score: health.heuristics },
-              { value: "accessibility",  label: "Accessibility", icon: Accessibility,   score: health.accessibility },
-              { value: "ux-laws",        label: "UX Laws",       icon: Scale,           score: health.uxLaws },
-              { value: "content",        label: "Content",       icon: FileText,        score: health.contentQuality },
-            ].map(({ value, label, icon: Icon, score }) => (
-              <TabsTrigger
-                key={value}
-                value={value}
-                className="flex-1 flex flex-col items-center justify-center gap-0.5 h-[68px] px-2 rounded-xl text-gray-500 transition-all
-                  data-active:bg-white data-active:text-[#EE661D] data-active:shadow-sm
-                  hover:text-gray-700 hover:bg-white/60"
-              >
-                <Icon className="h-4 w-4 shrink-0" />
-                <span className="text-xs font-semibold leading-none hidden sm:block">{label}</span>
-                {score !== null && (
-                  <span className="text-[10px] font-bold leading-none opacity-80">
-                    {Math.round(score)}
-                  </span>
-                )}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          {/* Underline tab bar */}
+          <div className="mb-6 border-b border-gray-200 bg-white rounded-t-xl">
+            <div className="flex">
+              {[
+                { value: "overview",      label: "Overview",      icon: LayoutDashboard, score: null },
+                { value: "heuristics",    label: "Heuristics",    icon: ListChecks,      score: health.heuristics },
+                { value: "accessibility", label: "Accessibility", icon: Accessibility,   score: health.accessibility },
+                { value: "ux-laws",       label: "UX Laws",       icon: Scale,           score: health.uxLaws },
+                { value: "content",       label: "Content",       icon: FileText,        score: health.contentQuality },
+              ].map(({ value, label, icon: Icon, score }) => {
+                const active = tab === value;
+                return (
+                  <button
+                    key={value}
+                    onClick={() => setTab(value)}
+                    className={`flex-1 flex flex-col items-center justify-center gap-1 py-4 px-2 border-b-2 transition-all ${
+                      active
+                        ? "border-[#EE661D] text-[#EE661D]"
+                        : "border-transparent text-gray-400 hover:text-gray-600 hover:border-gray-300"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 shrink-0" />
+                    <span className="text-xs font-semibold">{label}</span>
+                    {score !== null && (
+                      <span className="text-[11px] font-bold">{Math.round(score)}</span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           <TabsContent value="overview">
             <div className="grid gap-6 lg:grid-cols-2">
