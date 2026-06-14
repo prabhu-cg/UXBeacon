@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: uxbeacon-api
+    env: docker
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3001"
+      - key: FRONTEND_URL
+        sync: false
