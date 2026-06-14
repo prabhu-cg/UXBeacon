@@ -1,5 +1,5 @@
 # Playwright's official image ships Chromium + all system deps pre-installed
-FROM mcr.microsoft.com/playwright:v1.52.0-noble
+FROM mcr.microsoft.com/playwright:v1.60.0-noble
 
 WORKDIR /app
 
