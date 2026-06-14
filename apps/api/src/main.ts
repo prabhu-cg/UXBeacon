@@ -6,9 +6,13 @@ async function bootstrap() {
 
   app.enableCors({
     origin: (origin, callback) => {
-      // Allow all localhost origins in dev, restrict to FRONTEND_URL in prod
       const allowed = process.env.FRONTEND_URL;
-      if (!origin || /^http:\/\/localhost:\d+$/.test(origin) || origin === allowed) {
+      if (
+        !origin ||
+        /^http:\/\/localhost:\d+$/.test(origin) ||
+        /^https:\/\/[\w-]+\.vercel\.app$/.test(origin) ||
+        origin === allowed
+      ) {
         callback(null, true);
       } else {
         callback(new Error(`CORS: origin ${origin} not allowed`));
