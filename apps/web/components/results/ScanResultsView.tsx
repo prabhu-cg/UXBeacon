@@ -19,6 +19,58 @@ interface Props {
   result: ScanResult;
 }
 
+function scoreColor(s: number) {
+  return s >= 80 ? "#22c55e" : s >= 60 ? "#84cc16" : s >= 40 ? "#eab308" : "#ef4444";
+}
+
+function RadarChart({ data }: { data: { label: string; short: string; value: number }[] }) {
+  const cx = 110, cy = 110, R = 78;
+  const n = data.length;
+  const angles = data.map((_, i) => (i * 2 * Math.PI) / n - Math.PI / 2);
+  const pt = (angle: number, r: number) => ({
+    x: cx + r * Math.cos(angle),
+    y: cy + r * Math.sin(angle),
+  });
+  const poly = (level: number) =>
+    angles.map((a) => { const p = pt(a, R * level); return `${p.x},${p.y}`; }).join(" ");
+  const dataPath = data
+    .map((d, i) => { const p = pt(angles[i], (d.value / 100) * R); return `${p.x},${p.y}`; })
+    .join(" ");
+
+  return (
+    <svg viewBox="0 0 220 220" className="w-full h-full">
+      {/* Grid rings */}
+      {[0.25, 0.5, 0.75, 1].map((lvl) => (
+        <polygon key={lvl} points={poly(lvl)} fill="none" stroke="#e5e7eb" strokeWidth="1" />
+      ))}
+      {/* Axes */}
+      {angles.map((a, i) => {
+        const p = pt(a, R);
+        return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="#e5e7eb" strokeWidth="1" />;
+      })}
+      {/* Data fill */}
+      <polygon points={dataPath} fill="#EE661D" fillOpacity="0.15" stroke="#EE661D" strokeWidth="2" strokeLinejoin="round" />
+      {/* Data dots */}
+      {data.map((d, i) => {
+        const p = pt(angles[i], (d.value / 100) * R);
+        return <circle key={i} cx={p.x} cy={p.y} r="4" fill="#EE661D" stroke="white" strokeWidth="1.5" />;
+      })}
+      {/* Labels */}
+      {data.map((d, i) => {
+        const p = pt(angles[i], R + 22);
+        return (
+          <g key={i}>
+            <text x={p.x} y={p.y - 6} textAnchor="middle" fontSize="9" fill="#9ca3af" fontWeight="600">{d.short}</text>
+            <text x={p.x} y={p.y + 6} textAnchor="middle" fontSize="11" fill={scoreColor(d.value)} fontWeight="800">{Math.round(d.value)}</text>
+          </g>
+        );
+      })}
+      {/* Center overall */}
+      <circle cx={cx} cy={cy} r="18" fill="white" stroke="#f3f4f6" strokeWidth="1" />
+    </svg>
+  );
+}
+
 const SCORE_ROWS = [
   { key: "accessibility" as const, label: "Accessibility", weight: "25%" },
   { key: "heuristics" as const, label: "UX Heuristics", weight: "25%" },
@@ -121,31 +173,17 @@ export function ScanResultsView({ result }: Props) {
               </div>
             </div>
 
-            {/* Breakdown */}
-            <div className="flex-1 grid grid-cols-5 gap-3 sm:ml-auto sm:max-w-lg">
-              {SCORE_ROWS.map((row) => {
-                const score = health[row.key];
-                const color =
-                  score >= 80
-                    ? "#22c55e"
-                    : score >= 60
-                      ? "#84cc16"
-                      : score >= 40
-                        ? "#eab308"
-                        : "#ef4444";
-                return (
-                  <div key={row.key} className="text-center">
-                    <div className="text-xs text-gray-400 mb-1 leading-tight">{row.label}</div>
-                    <div
-                      className="text-lg font-extrabold"
-                      style={{ color }}
-                    >
-                      {Math.round(score)}
-                    </div>
-                    <div className="text-[10px] text-gray-400">{row.weight}</div>
-                  </div>
-                );
-              })}
+            {/* Radar chart */}
+            <div className="flex-1 flex justify-center sm:justify-end">
+              <div className="w-[220px] h-[220px]">
+                <RadarChart data={[
+                  { label: "Accessibility",   short: "Access.",  value: health.accessibility },
+                  { label: "UX Heuristics",   short: "Heurist.", value: health.heuristics },
+                  { label: "UX Laws",         short: "UX Laws",  value: health.uxLaws },
+                  { label: "Content Quality", short: "Content",  value: health.contentQuality },
+                  { label: "Navigation",      short: "Nav.",     value: health.navigation },
+                ]} />
+              </div>
             </div>
           </div>
 
@@ -170,7 +208,7 @@ export function ScanResultsView({ result }: Props) {
               <TabsTrigger
                 key={value}
                 value={value}
-                className="flex-1 flex flex-col items-center justify-center gap-0.5 h-auto py-2.5 px-2 rounded-xl text-gray-500 transition-all
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 h-[68px] px-2 rounded-xl text-gray-500 transition-all
                   data-active:bg-white data-active:text-[#EE661D] data-active:shadow-sm
                   hover:text-gray-700 hover:bg-white/60"
               >
