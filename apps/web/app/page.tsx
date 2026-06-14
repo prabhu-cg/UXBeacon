@@ -161,7 +161,7 @@ export default function HomePage() {
                 return (
                   <div
                     key={f.title}
-                    className="group rounded-2xl bg-white p-6 shadow-sm border border-gray-100 hover:border-[#EE661D]/30 hover:shadow-md transition-all"
+                    className="group rounded-2xl bg-white p-6 shadow-sm border border-gray-100 hover:border-[#EE661D] hover:shadow-md transition-all"
                   >
                     <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#EE661D]/10 group-hover:bg-[#EE661D]/15 transition-colors">
                       <Icon className="h-5 w-5 text-[#EE661D]" />
@@ -306,7 +306,7 @@ export default function HomePage() {
               Free. No account needed. Results in minutes.
             </p>
             <div className="mt-8">
-              <UrlAnalyzer />
+              <UrlAnalyzer inverted />
             </div>
           </div>
         </section>

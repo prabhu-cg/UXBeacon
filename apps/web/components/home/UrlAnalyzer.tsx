@@ -23,7 +23,7 @@ function isValidUrl(url: string): boolean {
   }
 }
 
-export function UrlAnalyzer() {
+export function UrlAnalyzer({ inverted = false }: { inverted?: boolean }) {
   const router = useRouter();
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
@@ -57,7 +57,7 @@ export function UrlAnalyzer() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleSubmit} className="relative">
-        <div className="flex items-center gap-0 rounded-2xl border-2 border-gray-200 bg-white p-1.5 shadow-lg shadow-gray-100 transition-all focus-within:border-[#EE661D] focus-within:shadow-[#EE661D]/10 focus-within:shadow-xl">
+        <div className="flex items-center gap-0 rounded-2xl border-2 border-gray-200 bg-white p-1.5 transition-all focus-within:border-[#EE661D]">
           <div className="flex items-center pl-3 pr-2">
             <Globe className="h-5 w-5 text-gray-400 shrink-0" />
           </div>
@@ -103,7 +103,7 @@ export function UrlAnalyzer() {
         </p>
       )}
 
-      <p className="mt-4 text-center text-xs text-gray-400">
+      <p className={`mt-4 text-center text-xs ${inverted ? "text-white/80" : "text-gray-400"}`}>
         Free · No account required · Up to 25 pages per scan
       </p>
     </div>

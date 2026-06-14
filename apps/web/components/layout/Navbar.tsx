@@ -8,13 +8,12 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.svg"
             alt="UXBeacon"
             width={32}
             height={38}
-            className="transition-transform group-hover:scale-105"
           />
           <div className="flex flex-col leading-none">
             <span className="text-lg font-bold tracking-tight text-[#333333]">UXBeacon</span>

@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description:
     "UXBeacon analyzes websites and digital products to measure UX quality, accessibility, content quality, and design consistency. Free UX audit tool.",
   keywords: ["UX audit", "accessibility checker", "UX quality", "web analysis", "heuristics"],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   openGraph: {
     title: "UXBeacon — Measure. Monitor. Improve.",
     description:
