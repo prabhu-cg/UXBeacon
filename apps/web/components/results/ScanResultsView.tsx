@@ -23,54 +23,6 @@ function scoreColor(s: number) {
   return s >= 80 ? "#22c55e" : s >= 60 ? "#84cc16" : s >= 40 ? "#eab308" : "#ef4444";
 }
 
-function RadarChart({ data }: { data: { label: string; short: string; value: number }[] }) {
-  const cx = 110, cy = 110, R = 78;
-  const n = data.length;
-  const angles = data.map((_, i) => (i * 2 * Math.PI) / n - Math.PI / 2);
-  const pt = (angle: number, r: number) => ({
-    x: cx + r * Math.cos(angle),
-    y: cy + r * Math.sin(angle),
-  });
-  const poly = (level: number) =>
-    angles.map((a) => { const p = pt(a, R * level); return `${p.x},${p.y}`; }).join(" ");
-  const dataPath = data
-    .map((d, i) => { const p = pt(angles[i], (d.value / 100) * R); return `${p.x},${p.y}`; })
-    .join(" ");
-
-  return (
-    <svg viewBox="0 0 220 220" className="w-full h-full">
-      {/* Grid rings */}
-      {[0.25, 0.5, 0.75, 1].map((lvl) => (
-        <polygon key={lvl} points={poly(lvl)} fill="none" stroke="#e5e7eb" strokeWidth="1" />
-      ))}
-      {/* Axes */}
-      {angles.map((a, i) => {
-        const p = pt(a, R);
-        return <line key={i} x1={cx} y1={cy} x2={p.x} y2={p.y} stroke="#e5e7eb" strokeWidth="1" />;
-      })}
-      {/* Data fill */}
-      <polygon points={dataPath} fill="#EE661D" fillOpacity="0.15" stroke="#EE661D" strokeWidth="2" strokeLinejoin="round" />
-      {/* Data dots */}
-      {data.map((d, i) => {
-        const p = pt(angles[i], (d.value / 100) * R);
-        return <circle key={i} cx={p.x} cy={p.y} r="4" fill="#EE661D" stroke="white" strokeWidth="1.5" />;
-      })}
-      {/* Labels */}
-      {data.map((d, i) => {
-        const p = pt(angles[i], R + 22);
-        return (
-          <g key={i}>
-            <text x={p.x} y={p.y - 6} textAnchor="middle" fontSize="9" fill="#9ca3af" fontWeight="600">{d.short}</text>
-            <text x={p.x} y={p.y + 6} textAnchor="middle" fontSize="11" fill={scoreColor(d.value)} fontWeight="800">{Math.round(d.value)}</text>
-          </g>
-        );
-      })}
-      {/* Center overall */}
-      <circle cx={cx} cy={cy} r="18" fill="white" stroke="#f3f4f6" strokeWidth="1" />
-    </svg>
-  );
-}
-
 const SCORE_ROWS = [
   { key: "accessibility" as const, label: "Accessibility", weight: "25%" },
   { key: "heuristics" as const, label: "UX Heuristics", weight: "25%" },
@@ -173,17 +125,31 @@ export function ScanResultsView({ result }: Props) {
               </div>
             </div>
 
-            {/* Radar chart */}
-            <div className="flex-1 flex justify-center sm:justify-end">
-              <div className="w-[220px] h-[220px]">
-                <RadarChart data={[
-                  { label: "Accessibility",   short: "Access.",  value: health.accessibility },
-                  { label: "UX Heuristics",   short: "Heurist.", value: health.heuristics },
-                  { label: "UX Laws",         short: "UX Laws",  value: health.uxLaws },
-                  { label: "Content Quality", short: "Content",  value: health.contentQuality },
-                  { label: "Navigation",      short: "Nav.",     value: health.navigation },
-                ]} />
-              </div>
+            {/* Score breakdown bars */}
+            <div className="flex-1 space-y-3 sm:ml-8 min-w-0 sm:max-w-sm w-full">
+              {SCORE_ROWS.map((row) => {
+                const score = health[row.key];
+                const color = scoreColor(score);
+                return (
+                  <div key={row.key}>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-medium text-gray-500">{row.label}</span>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="text-[10px] text-gray-400">{row.weight}</span>
+                        <span className="text-sm font-extrabold w-7 text-right" style={{ color }}>
+                          {Math.round(score)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="h-2 w-full rounded-full bg-gray-100 overflow-hidden">
+                      <div
+                        className="h-full rounded-full"
+                        style={{ width: `${score}%`, backgroundColor: color }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -197,7 +163,7 @@ export function ScanResultsView({ result }: Props) {
 
         {/* Detail tabs */}
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="mb-6 w-full bg-gray-100 rounded-2xl p-1 h-auto flex gap-0.5">
+          <TabsList className="mb-6 w-full bg-gray-100 rounded-2xl p-1 h-[76px] flex gap-0.5">
             {[
               { value: "overview",       label: "Overview",      icon: LayoutDashboard, score: null },
               { value: "heuristics",     label: "Heuristics",    icon: ListChecks,      score: health.heuristics },
