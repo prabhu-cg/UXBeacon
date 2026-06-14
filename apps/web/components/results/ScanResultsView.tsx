@@ -10,8 +10,9 @@ import { HeuristicsPanel } from "./HeuristicsPanel";
 import { AccessibilityPanel } from "./AccessibilityPanel";
 import { UXLawsPanel } from "./UXLawsPanel";
 import { ContentPanel } from "./ContentPanel";
-import { Download, ExternalLink, RotateCcw } from "lucide-react";
+import { Download, ExternalLink, RotateCcw, LayoutDashboard, ListChecks, Accessibility, Scale, FileText } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { GRADE_COLORS } from "@/lib/constants";
 
 interface Props {
@@ -42,11 +43,9 @@ export function ScanResultsView({ result }: Props) {
       <div className="bg-white border-b border-gray-100 sticky top-0 z-40">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <Link
-              href="/"
-              className="shrink-0 text-lg font-extrabold text-[#333333]"
-            >
-              UX<span className="text-[#EE661D]">Beacon</span>
+            <Link href="/" className="shrink-0 flex items-center gap-2">
+              <Image src="/logo.svg" alt="UXBeacon" width={22} height={26} />
+              <span className="text-base font-bold text-[#333333] hidden sm:block">UXBeacon</span>
             </Link>
             <span className="text-gray-300">/</span>
             <span className="text-sm text-gray-500 truncate max-w-[200px] sm:max-w-sm">
@@ -160,12 +159,30 @@ export function ScanResultsView({ result }: Props) {
 
         {/* Detail tabs */}
         <Tabs value={tab} onValueChange={setTab}>
-          <TabsList className="mb-6 bg-white border border-gray-100 h-10 rounded-xl">
-            <TabsTrigger value="overview" className="text-sm rounded-lg">Overview</TabsTrigger>
-            <TabsTrigger value="heuristics" className="text-sm rounded-lg">Heuristics</TabsTrigger>
-            <TabsTrigger value="accessibility" className="text-sm rounded-lg">Accessibility</TabsTrigger>
-            <TabsTrigger value="ux-laws" className="text-sm rounded-lg">UX Laws</TabsTrigger>
-            <TabsTrigger value="content" className="text-sm rounded-lg">Content</TabsTrigger>
+          <TabsList className="mb-6 w-full bg-gray-100 rounded-2xl p-1 h-auto flex gap-0.5">
+            {[
+              { value: "overview",       label: "Overview",      icon: LayoutDashboard, score: null },
+              { value: "heuristics",     label: "Heuristics",    icon: ListChecks,      score: health.heuristics },
+              { value: "accessibility",  label: "Accessibility", icon: Accessibility,   score: health.accessibility },
+              { value: "ux-laws",        label: "UX Laws",       icon: Scale,           score: health.uxLaws },
+              { value: "content",        label: "Content",       icon: FileText,        score: health.contentQuality },
+            ].map(({ value, label, icon: Icon, score }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 h-auto py-2.5 px-2 rounded-xl text-gray-500 transition-all
+                  data-active:bg-white data-active:text-[#EE661D] data-active:shadow-sm
+                  hover:text-gray-700 hover:bg-white/60"
+              >
+                <Icon className="h-4 w-4 shrink-0" />
+                <span className="text-xs font-semibold leading-none hidden sm:block">{label}</span>
+                {score !== null && (
+                  <span className="text-[10px] font-bold leading-none opacity-80">
+                    {Math.round(score)}
+                  </span>
+                )}
+              </TabsTrigger>
+            ))}
           </TabsList>
 
           <TabsContent value="overview">
