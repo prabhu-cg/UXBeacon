@@ -1,0 +1,54 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+dist/
+build/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Turbo
+.turbo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+
+# IDEs
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Vercel
+.vercel
+
+# Screenshots (temp scan storage)
+tmp/screenshots/
+
+# Local env files
+.env.local
+.env.*.local
+
+# NestJS compiled output
+apps/api/dist/
+
+# Next.js build output (already in apps/web/.gitignore but belt-and-suspenders)
+apps/web/.next/
+packages/shared-types/src/*.js
+packages/shared-types/src/*.d.ts
+packages/shared-types/src/*.map
