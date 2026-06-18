@@ -145,7 +145,122 @@ export interface SitemapNode {
   depth: number;
 }
 
-// API responses
+// ─── Design Scan (Phase 3A) ───────────────────────────────────────────────────
+
+export type DesignScanStatus = "pending" | "analyzing" | "complete" | "failed";
+
+export interface VisualHierarchyResult {
+  score: number;
+  dominantElementCount: number;
+  headingProminence: number;
+  ctaProminence: number;
+  attentionFlow: string;
+  findings: string[];
+}
+
+export interface ContrastResult {
+  score: number;
+  wcagAAPassRate: number;
+  wcagAAAPassRate: number;
+  issueCount: number;
+  findings: string[];
+}
+
+export interface TypographyResult {
+  score: number;
+  fontSizeVariations: number;
+  isBoldDetected: boolean;
+  findings: string[];
+}
+
+export interface SpacingResult {
+  score: number;
+  gapConsistency: number;
+  alignmentScore: number;
+  findings: string[];
+}
+
+export interface DensityResult {
+  score: number;
+  whiteSpaceRatio: number;
+  contentDensity: number;
+  findings: string[];
+}
+
+export interface CTAResult {
+  score: number;
+  primaryCTAFound: boolean;
+  primaryCTAText: string;
+  ctaCount: number;
+  findings: string[];
+}
+
+export interface ColorResult {
+  score: number;
+  dominantColors: string[];
+  accentColors: string[];
+  totalColorGroups: number;
+  findings: string[];
+}
+
+export interface GestaltResult {
+  score: number;
+  proximity: number;
+  similarity: number;
+  continuity: number;
+  findings: string[];
+}
+
+export interface BalanceResult {
+  score: number;
+  horizontalBalance: number;
+  verticalBalance: number;
+  findings: string[];
+}
+
+export interface VisualQualityScore {
+  overall: number;
+  grade: UXGrade;
+  hierarchy: number;
+  contrast: number;
+  typography: number;
+  spacing: number;
+  density: number;
+  cta: number;
+  color: number;
+  balance: number;
+}
+
+export interface DesignScanResult {
+  id: string;
+  status: DesignScanStatus;
+  filename: string;
+  fileSize: number;
+  mimeType: string;
+  startedAt: string;
+  completedAt?: string;
+  visualQualityScore?: VisualQualityScore;
+  hierarchyResult?: VisualHierarchyResult;
+  contrastResult?: ContrastResult;
+  typographyResult?: TypographyResult;
+  spacingResult?: SpacingResult;
+  densityResult?: DensityResult;
+  ctaResult?: CTAResult;
+  colorResult?: ColorResult;
+  gestaltResult?: GestaltResult;
+  balanceResult?: BalanceResult;
+  executiveSummary?: string;
+  keyFindings?: string[];
+  recommendations?: string[];
+  error?: string;
+}
+
+export interface DesignScanInitResponse {
+  scanId: string;
+  status: DesignScanStatus;
+}
+
+// ─── API responses ────────────────────────────────────────────────────────────
 export interface ApiResponse<T> {
   data: T;
   error?: string;
