@@ -66,7 +66,7 @@ export function UrlAnalyzer({ inverted = false }: { inverted?: boolean }) {
             inputMode="url"
             autoComplete="url"
             spellCheck={false}
-            placeholder="Enter any website URL to analyze..."
+            placeholder="Enter any website URL to analyse..."
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
@@ -85,11 +85,11 @@ export function UrlAnalyzer({ inverted = false }: { inverted?: boolean }) {
             {isPending ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                Analyzing...
+                Analysing...
               </>
             ) : (
               <>
-                Analyze
+                Analyse
                 <ArrowRight className="h-4 w-4 ml-2" />
               </>
             )}

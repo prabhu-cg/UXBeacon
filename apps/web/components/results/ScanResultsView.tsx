@@ -117,7 +117,7 @@ export function ScanResultsView({ result }: Props) {
                 </div>
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
                   <Badge variant="outline" className="text-xs text-gray-500">
-                    {result.pageCount} pages analyzed
+                    {result.pageCount} pages analysed
                   </Badge>
                   <Badge variant="outline" className="text-xs text-gray-500">
                     {new Date(result.startedAt).toLocaleDateString()}

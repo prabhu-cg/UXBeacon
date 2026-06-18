@@ -123,7 +123,7 @@ export function ImageUploader() {
               </div>
               <div className="mt-3 flex items-center gap-2">
                 <ImageIcon className="h-3.5 w-3.5 text-[#EE661D]" />
-                <span className="text-xs text-gray-500">Ready to analyze</span>
+                <span className="text-xs text-gray-500">Ready to analyse</span>
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export function ImageUploader() {
             {uploading ? (
               <><Loader2 className="h-4 w-4 animate-spin mr-2" />Uploading…</>
             ) : (
-              "Analyze Design"
+              "Analyse Design"
             )}
           </Button>
         </div>

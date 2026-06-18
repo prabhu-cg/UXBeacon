@@ -29,7 +29,7 @@ export function ScanProgressView({ url, status }: Props) {
           <Loader2 className="h-7 w-7 text-[#EE661D] animate-spin" />
         </div>
 
-        <h1 className="text-xl font-bold text-[#333333] mb-2">Analyzing your website</h1>
+        <h1 className="text-xl font-bold text-[#333333] mb-2">Analysing your website</h1>
         <p className="text-sm text-gray-500 mb-8 truncate max-w-xs mx-auto">{url}</p>
 
         {/* Step list */}

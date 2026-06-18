@@ -64,7 +64,7 @@ export function DesignPageClient({ scanId }: { scanId: string }) {
             <AlertCircle className="h-6 w-6 text-red-500" />
           </div>
           <h2 className="text-lg font-bold text-[#333333] mb-2">Analysis failed</h2>
-          <p className="text-sm text-gray-500 mb-6">{result.error ?? "The image could not be analyzed."}</p>
+          <p className="text-sm text-gray-500 mb-6">{result.error ?? "The image could not be analysed."}</p>
           <Link href="/design" className="inline-flex items-center justify-center rounded-full bg-[#EE661D] text-white px-6 py-2.5 text-sm font-semibold hover:bg-[#d55518] transition-colors">
             Try another screenshot
           </Link>

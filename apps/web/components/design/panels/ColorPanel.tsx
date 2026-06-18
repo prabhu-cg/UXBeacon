@@ -12,11 +12,11 @@ function Swatch({ hex }: { hex: string }) {
 export function ColorPanel({ data }: { data: ColorResult }) {
   return (
     <div className="space-y-4">
-      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Color Analysis</h3>
+      <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Colour Analysis</h3>
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="rounded-xl border border-gray-100 p-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Dominant Colors</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Dominant Colours</p>
           {data.dominantColors.length > 0 ? (
             <div className="space-y-2">
               {data.dominantColors.map((hex) => <Swatch key={hex} hex={hex} />)}
@@ -27,7 +27,7 @@ export function ColorPanel({ data }: { data: ColorResult }) {
         </div>
 
         <div className="rounded-xl border border-gray-100 p-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Accent Colors</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Accent Colours</p>
           {data.accentColors.length > 0 ? (
             <div className="space-y-2">
               {data.accentColors.map((hex) => <Swatch key={hex} hex={hex} />)}

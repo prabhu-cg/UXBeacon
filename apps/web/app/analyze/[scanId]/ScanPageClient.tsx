@@ -86,7 +86,7 @@ export function ScanPageClient({ scanId }: Props) {
           </div>
           <h2 className="text-lg font-bold text-[#333333] mb-2">Scan failed</h2>
           <p className="text-sm text-gray-500 mb-6">
-            {result.error ?? "The website could not be analyzed. It may be behind a login or blocking crawlers."}
+            {result.error ?? "The website could not be analysed. It may be behind a login or blocking crawlers."}
           </p>
           <Link
             href="/"

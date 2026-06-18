@@ -60,7 +60,7 @@ const steps = [
   },
   {
     number: "02",
-    title: "We crawl & analyze",
+    title: "We crawl & analyse",
     description:
       "UXBeacon crawls up to 25 pages, captures screenshots, and runs 6 analysis engines in parallel.",
   },
@@ -120,7 +120,7 @@ export default function HomePage() {
             </h1>
 
             <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-500 leading-relaxed sm:text-xl">
-              UXBeacon analyzes accessibility, UX heuristics, content quality, and UX laws
+              UXBeacon analyses accessibility, UX heuristics, content quality, and UX laws
               to give you an actionable health score — in seconds.
             </p>
 
@@ -144,7 +144,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <p className="text-sm font-semibold uppercase tracking-widest text-[#EE661D] mb-3">
-                What we analyze
+                What we analyse
               </p>
               <h2 className="text-3xl font-extrabold text-[#333333] sm:text-4xl">
                 Six engines. One unified score.

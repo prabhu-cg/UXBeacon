@@ -3,7 +3,7 @@
 import { Loader2, Layers, Contrast, Type, LayoutGrid, Maximize2, MousePointerClick, Palette, Circle, Scale } from "lucide-react";
 
 const STEPS = [
-  { icon: Layers,             label: "Analyzing visual hierarchy" },
+  { icon: Layers,             label: "Analysing visual hierarchy" },
   { icon: Contrast,           label: "Checking contrast & WCAG compliance" },
   { icon: Type,               label: "Evaluating typography consistency" },
   { icon: LayoutGrid,         label: "Measuring spacing & alignment" },
@@ -22,7 +22,7 @@ export function DesignProgressView({ filename }: { filename?: string }) {
           <Loader2 className="h-7 w-7 text-[#EE661D] animate-spin" />
         </div>
 
-        <h1 className="text-xl font-bold text-[#333333] mb-2">Analyzing your design</h1>
+        <h1 className="text-xl font-bold text-[#333333] mb-2">Analysing your design</h1>
         {filename && (
           <p className="text-sm text-gray-500 mb-8 truncate max-w-xs mx-auto">{filename}</p>
         )}

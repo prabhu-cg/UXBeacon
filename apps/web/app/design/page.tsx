@@ -6,11 +6,11 @@ import { ImageIcon, Layers, Contrast, Type, LayoutGrid, Maximize2, MousePointerC
 const features = [
   { icon: Layers,            title: "Visual Hierarchy",   description: "Detect dominant elements, heading prominence, CTA visibility, and attention flow patterns." },
   { icon: Contrast,          title: "WCAG Contrast",      description: "Evaluate text contrast against WCAG AA and AAA standards with pass/fail rates." },
-  { icon: Type,              title: "Typography",         description: "Analyze font size variations, weight consistency, and typographic scale." },
+  { icon: Type,              title: "Typography",         description: "Analyse font size variations, weight consistency, and typographic scale." },
   { icon: LayoutGrid,        title: "Spacing & Alignment",description: "Measure gap consistency, padding uniformity, and horizontal alignment axes." },
   { icon: Maximize2,         title: "Layout Density",     description: "Compute whitespace ratio and content density to assess breathing room." },
   { icon: MousePointerClick, title: "CTA Effectiveness",  description: "Identify primary and secondary CTAs, score their visibility and placement." },
-  { icon: Palette,           title: "Color Analysis",     description: "Extract dominant and accent colors, evaluate palette coherence and brand consistency." },
+  { icon: Palette,           title: "Colour Analysis",    description: "Extract dominant and accent colours, evaluate palette coherence and brand consistency." },
   { icon: Scale,             title: "Visual Balance",     description: "Measure horizontal and vertical weight distribution across the layout." },
 ];
 
@@ -35,7 +35,7 @@ export default function DesignPage() {
             </div>
 
             <h1 className="text-4xl font-extrabold tracking-tight text-[#333333] sm:text-5xl lg:text-6xl">
-              Analyze any{" "}
+              Analyse any{" "}
               <span className="text-[#EE661D]">design</span>
               <br />
               from a screenshot
@@ -70,7 +70,7 @@ export default function DesignPage() {
         <section className="bg-[#FFF7E3] py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
-              <p className="text-sm font-semibold uppercase tracking-widest text-[#EE661D] mb-3">What we analyze</p>
+              <p className="text-sm font-semibold uppercase tracking-widest text-[#EE661D] mb-3">What we analyse</p>
               <h2 className="text-3xl font-extrabold text-[#333333] sm:text-4xl">9 design dimensions. One score.</h2>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

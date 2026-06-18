@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "UXBeacon — Measure. Monitor. Improve.",
   description:
-    "UXBeacon analyzes websites and digital products to measure UX quality, accessibility, content quality, and design consistency. Free UX audit tool.",
+    "UXBeacon analyses websites and digital products to measure UX quality, accessibility, content quality, and design consistency. Free UX audit tool.",
   keywords: ["UX audit", "accessibility checker", "UX quality", "web analysis", "heuristics"],
   icons: {
     icon: "/favicon.svg",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "UXBeacon — Measure. Monitor. Improve.",
     description:
-      "Free UX analysis tool. Analyze any website for UX quality, accessibility, and content issues in seconds.",
+      "Free UX analysis tool. Analyse any website for UX quality, accessibility, and content issues in seconds.",
     type: "website",
     siteName: "UXBeacon",
   },

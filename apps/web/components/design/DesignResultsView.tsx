@@ -30,7 +30,7 @@ const SCORE_ROWS = [
   { key: "spacing"    as const, label: "Spacing",           weight: "15%" },
   { key: "density"    as const, label: "Layout Density",    weight: "10%" },
   { key: "cta"        as const, label: "CTA Effectiveness", weight: "10%" },
-  { key: "color"      as const, label: "Color Consistency", weight: "10%" },
+  { key: "color"      as const, label: "Colour Consistency", weight: "10%" },
   { key: "balance"    as const, label: "Visual Balance",    weight: "5%"  },
 ];
 
