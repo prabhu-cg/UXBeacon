@@ -10,10 +10,11 @@ import { HeuristicsPanel } from "./HeuristicsPanel";
 import { AccessibilityPanel } from "./AccessibilityPanel";
 import { UXLawsPanel } from "./UXLawsPanel";
 import { ContentPanel } from "./ContentPanel";
-import { Download, ExternalLink, RotateCcw, LayoutDashboard, ListChecks, Accessibility, Scale, FileText } from "lucide-react";
+import { NavigationPanel } from "./NavigationPanel";
+import { Download, ExternalLink, RotateCcw, LayoutDashboard, ListChecks, Accessibility, Scale, FileText, Navigation } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { GRADE_COLORS } from "@/lib/constants";
+import { GRADE_COLORS, API_BASE_URL } from "@/lib/constants";
 
 interface Props {
   result: ScanResult;
@@ -37,7 +38,7 @@ export function ScanResultsView({ result }: Props) {
   const accentColor = GRADE_COLORS[health.grade] ?? "#EE661D";
 
   function handleDownload(format: "json" | "csv") {
-    const url = `/api/scans/${result.id}/export?format=${format}`;
+    const url = `${API_BASE_URL}/api/scans/${result.id}/export?format=${format}`;
     window.open(url, "_blank");
   }
 
@@ -172,6 +173,7 @@ export function ScanResultsView({ result }: Props) {
                 { value: "accessibility", label: "Accessibility", icon: Accessibility,   score: health.accessibility },
                 { value: "ux-laws",       label: "UX Laws",       icon: Scale,           score: health.uxLaws },
                 { value: "content",       label: "Content",       icon: FileText,        score: health.contentQuality },
+                { value: "navigation",    label: "Navigation",    icon: Navigation,      score: health.navigation },
               ].map(({ value, label, icon: Icon, score }) => {
                 const active = tab === value;
                 return (
@@ -295,6 +297,16 @@ export function ScanResultsView({ result }: Props) {
                 <ContentPanel data={result.contentScore} />
               ) : (
                 <p className="text-sm text-gray-400">No content quality data available.</p>
+              )}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="navigation">
+            <div className="bg-white rounded-2xl border border-gray-100 p-6">
+              {result.navigationScore ? (
+                <NavigationPanel data={result.navigationScore} siteStructure={result.siteStructure} />
+              ) : (
+                <p className="text-sm text-gray-400">No navigation data available.</p>
               )}
             </div>
           </TabsContent>
