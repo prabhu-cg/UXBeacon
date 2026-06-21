@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ImageUploader } from "@/components/design/ImageUploader";
-import { ImageIcon, Layers, Contrast, Type, LayoutGrid, Maximize2, MousePointerClick, Palette, Scale } from "lucide-react";
+import { ImageIcon, Layers, Contrast, Type, LayoutGrid, Maximize2, MousePointerClick, Palette, Scale, ChevronRight } from "lucide-react";
 
 const features = [
   { icon: Layers,            title: "Visual Hierarchy",   description: "Detect dominant elements, heading prominence, CTA visibility, and attention flow patterns." },
@@ -67,7 +67,7 @@ export default function DesignPage() {
         </section>
 
         {/* Features */}
-        <section className="bg-[#FFF7E3] py-20 sm:py-28">
+        <section id="features" className="bg-[#FFF7E3] py-20 sm:py-28">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <p className="text-sm font-semibold uppercase tracking-widest text-[#EE661D] mb-3">What we analyse</p>
@@ -86,6 +86,60 @@ export default function DesignPage() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+        {/* How it works */}
+        <section id="how-it-works" className="bg-white py-20 sm:py-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <p className="text-sm font-semibold uppercase tracking-widest text-[#EE661D] mb-3">
+                How it works
+              </p>
+              <h2 className="text-3xl font-extrabold text-[#333333] sm:text-4xl">
+                From screenshot to design report in seconds
+              </h2>
+            </div>
+
+            <div className="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  number: "01",
+                  title: "Upload a screenshot",
+                  description: "Drag and drop or select a PNG, JPG, or WEBP screenshot of any UI — web, mobile, or desktop.",
+                },
+                {
+                  number: "02",
+                  title: "We analyse the design",
+                  description: "9 visual engines run in parallel: contrast, typography, spacing, hierarchy, colour, balance, and more.",
+                },
+                {
+                  number: "03",
+                  title: "Review your findings",
+                  description: "Get a scored design health report with per-dimension breakdowns and specific issues highlighted.",
+                },
+                {
+                  number: "04",
+                  title: "Share with your team",
+                  description: "Export results as JSON or share the findings directly with designers and stakeholders.",
+                },
+              ].map((step, idx, arr) => (
+                <div key={step.number} className="relative flex flex-col items-center text-center">
+                  <div className="relative z-10 mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#EE661D]/20 bg-white shadow-sm">
+                    <span className="text-lg font-extrabold text-[#EE661D]">{step.number}</span>
+                  </div>
+                  {idx < arr.length - 1 && (
+                    <ChevronRight
+                      aria-hidden
+                      className="absolute top-4 -right-4 h-8 w-8 text-gray-200 hidden lg:block"
+                    />
+                  )}
+                  <h3 className="text-base font-bold text-[#333333] mb-2">{step.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed max-w-[200px]">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

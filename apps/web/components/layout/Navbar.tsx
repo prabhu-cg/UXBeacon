@@ -24,10 +24,10 @@ export function Navbar() {
 
         {/* Nav links */}
         <nav className="hidden md:flex items-center gap-6">
-          <Link href="/#features" className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
+          <Link href={isDesign ? "/design#features" : "/#features"} className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
             Features
           </Link>
-          <Link href="/#how-it-works" className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
+          <Link href={isDesign ? "/design#how-it-works" : "/#how-it-works"} className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
             How it works
           </Link>
         </nav>
