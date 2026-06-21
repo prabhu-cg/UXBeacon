@@ -260,6 +260,80 @@ export interface DesignScanInitResponse {
   status: DesignScanStatus;
 }
 
+// ─── Attention Scan (Phase 3B) ────────────────────────────────────────────────
+
+export type AttentionScanStatus = "pending" | "analyzing" | "complete" | "failed";
+
+export interface AttentionRegion {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  weight: number;
+  rank: number;
+  label: string;
+}
+
+export interface CTAAttentionResult {
+  score: number;
+  ctaRank: number | null;
+  ctaWeight: number;
+  prominence: number;
+  visibility: number;
+  findings: string[];
+}
+
+export interface HeroAttentionResult {
+  score: number;
+  heroDominance: number;
+  headlineProminence: number;
+  messageVisibility: number;
+  findings: string[];
+}
+
+export interface AttentionLeakageResult {
+  score: number;
+  leakageDetected: boolean;
+  leakingRegions: string[];
+  findings: string[];
+  recommendations: string[];
+}
+
+export interface VisualClutterResult {
+  score: number;
+  clutterScore: number;
+  competingFocalPoints: number;
+  edgeDensity: number;
+  findings: string[];
+}
+
+export interface AttentionScanResult {
+  id: string;
+  status: AttentionScanStatus;
+  filename: string;
+  fileSize: number;
+  mimeType: string;
+  startedAt: string;
+  completedAt?: string;
+  heatmapDataUri?: string;
+  attentionRegions?: AttentionRegion[];
+  ctaAttention?: CTAAttentionResult;
+  heroAttention?: HeroAttentionResult;
+  leakage?: AttentionLeakageResult;
+  clutter?: VisualClutterResult;
+  overallScore?: number;
+  grade?: UXGrade;
+  executiveSummary?: string;
+  keyFindings?: string[];
+  recommendations?: string[];
+  error?: string;
+}
+
+export interface AttentionScanInitResponse {
+  scanId: string;
+  status: AttentionScanStatus;
+}
+
 // ─── API responses ────────────────────────────────────────────────────────────
 export interface ApiResponse<T> {
   data: T;

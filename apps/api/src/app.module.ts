@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ScanModule } from './scans/scan.module';
 import { DesignScanModule } from './design-scans/design-scan.module';
+import { AttentionScanModule } from './attention-scans/attention-scan.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { DesignScanModule } from './design-scans/design-scan.module';
     ]),
     ScanModule,
     DesignScanModule,
+    AttentionScanModule,
   ],
 })
 export class AppModule {}

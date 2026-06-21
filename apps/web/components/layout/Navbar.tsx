@@ -6,7 +6,12 @@ import { usePathname } from "next/navigation";
 
 export function Navbar() {
   const pathname = usePathname();
-  const isDesign = pathname?.startsWith("/design");
+  const isDesign    = pathname?.startsWith("/design");
+  const isAttention = pathname?.startsWith("/attention");
+  const isHome      = !isDesign && !isAttention;
+
+  const featuresHref   = isDesign ? "/design#features"    : isAttention ? "/attention#features"    : "/#features";
+  const howItWorksHref = isDesign ? "/design#how-it-works": isAttention ? "/attention#how-it-works": "/#how-it-works";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
@@ -25,18 +30,12 @@ export function Navbar() {
             </div>
           </Link>
 
-          {/* Nav links — desktop only (mobile row below) */}
+          {/* Nav links — desktop only */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href={isDesign ? "/design#features" : "/#features"}
-              className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors"
-            >
+            <Link href={featuresHref} className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
               Features
             </Link>
-            <Link
-              href={isDesign ? "/design#how-it-works" : "/#how-it-works"}
-              className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors"
-            >
+            <Link href={howItWorksHref} className="text-sm font-500 text-gray-600 hover:text-[#EE661D] transition-colors">
               How it works
             </Link>
           </nav>
@@ -45,10 +44,8 @@ export function Navbar() {
           <div className="flex items-center rounded-full border border-gray-200 bg-gray-50 p-1 gap-0.5 shrink-0">
             <Link
               href="/#analyzer"
-              className={`inline-flex items-center justify-center rounded-full px-3 sm:px-4 h-8 text-sm font-semibold transition-all whitespace-nowrap ${
-                !isDesign
-                  ? "bg-[#EE661D] text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                isHome ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
               }`}
             >
               <span className="sm:hidden">Analyse</span>
@@ -56,30 +53,30 @@ export function Navbar() {
             </Link>
             <Link
               href="/design"
-              className={`inline-flex items-center justify-center rounded-full px-3 sm:px-4 h-8 text-sm font-semibold transition-all whitespace-nowrap ${
-                isDesign
-                  ? "bg-[#EE661D] text-white shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                isDesign ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
               }`}
             >
               <span className="sm:hidden">Design</span>
               <span className="hidden sm:inline">Design Scan</span>
             </Link>
+            <Link
+              href="/attention"
+              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                isAttention ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Attention
+            </Link>
           </div>
         </div>
 
-        {/* Mobile nav row — Features + How it works */}
+        {/* Mobile nav row */}
         <div className="flex md:hidden items-center justify-center gap-8 border-t border-gray-100 py-2.5">
-          <Link
-            href={isDesign ? "/design#features" : "/#features"}
-            className="text-sm font-medium text-gray-600 hover:text-[#EE661D] transition-colors"
-          >
+          <Link href={featuresHref} className="text-sm font-medium text-gray-600 hover:text-[#EE661D] transition-colors">
             Features
           </Link>
-          <Link
-            href={isDesign ? "/design#how-it-works" : "/#how-it-works"}
-            className="text-sm font-medium text-gray-600 hover:text-[#EE661D] transition-colors"
-          >
+          <Link href={howItWorksHref} className="text-sm font-medium text-gray-600 hover:text-[#EE661D] transition-colors">
             How it works
           </Link>
         </div>

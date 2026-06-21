@@ -260,6 +260,80 @@ export interface DesignScanInitResponse {
   status: DesignScanStatus;
 }
 
+// ─── Attention Scan (Phase 3B) ────────────────────────────────────────────────
+
+export type AttentionScanStatus = "pending" | "analyzing" | "complete" | "failed";
+
+export interface AttentionRegion {
+  x: number;       // normalised 0–1 (left edge)
+  y: number;       // normalised 0–1 (top edge)
+  width: number;   // normalised 0–1
+  height: number;  // normalised 0–1
+  weight: number;  // 0–100 attention weight
+  rank: number;    // 1 = highest attention
+  label: string;   // "Hero", "CTA", "Navigation", "Content", "Visual Element"
+}
+
+export interface CTAAttentionResult {
+  score: number;
+  ctaRank: number | null;  // position in attention order (1 = top attention anchor)
+  ctaWeight: number;       // 0–100
+  prominence: number;      // 0–100
+  visibility: number;      // 0–100
+  findings: string[];
+}
+
+export interface HeroAttentionResult {
+  score: number;
+  heroDominance: number;      // 0–100
+  headlineProminence: number; // 0–100
+  messageVisibility: number;  // 0–100
+  findings: string[];
+}
+
+export interface AttentionLeakageResult {
+  score: number;           // higher = less leakage (good)
+  leakageDetected: boolean;
+  leakingRegions: string[];
+  findings: string[];
+  recommendations: string[];
+}
+
+export interface VisualClutterResult {
+  score: number;              // higher = less clutter (good)
+  clutterScore: number;       // higher = more clutter (inverse of score)
+  competingFocalPoints: number;
+  edgeDensity: number;        // 0–1
+  findings: string[];
+}
+
+export interface AttentionScanResult {
+  id: string;
+  status: AttentionScanStatus;
+  filename: string;
+  fileSize: number;
+  mimeType: string;
+  startedAt: string;
+  completedAt?: string;
+  heatmapDataUri?: string;       // base64 PNG — original + heatmap overlay
+  attentionRegions?: AttentionRegion[];
+  ctaAttention?: CTAAttentionResult;
+  heroAttention?: HeroAttentionResult;
+  leakage?: AttentionLeakageResult;
+  clutter?: VisualClutterResult;
+  overallScore?: number;
+  grade?: UXGrade;
+  executiveSummary?: string;
+  keyFindings?: string[];
+  recommendations?: string[];
+  error?: string;
+}
+
+export interface AttentionScanInitResponse {
+  scanId: string;
+  status: AttentionScanStatus;
+}
+
 // ─── API responses ────────────────────────────────────────────────────────────
 export interface ApiResponse<T> {
   data: T;
