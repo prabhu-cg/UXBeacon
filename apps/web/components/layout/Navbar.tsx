@@ -41,10 +41,10 @@ export function Navbar() {
           </nav>
 
           {/* Segmented tab control */}
-          <div className="flex items-center rounded-full border border-gray-200 bg-gray-50 p-1 gap-0.5 shrink-0">
+          <div className="flex items-center rounded-full border border-gray-200 bg-gray-50 p-1 gap-0.5 min-w-0">
             <Link
               href="/#analyzer"
-              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+              className={`inline-flex items-center justify-center rounded-full px-2 sm:px-4 h-8 text-[11px] sm:text-sm font-semibold transition-all whitespace-nowrap ${
                 isHome ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
               }`}
             >
@@ -53,7 +53,7 @@ export function Navbar() {
             </Link>
             <Link
               href="/design"
-              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+              className={`inline-flex items-center justify-center rounded-full px-2 sm:px-4 h-8 text-[11px] sm:text-sm font-semibold transition-all whitespace-nowrap ${
                 isDesign ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
               }`}
             >
@@ -62,11 +62,12 @@ export function Navbar() {
             </Link>
             <Link
               href="/attention"
-              className={`inline-flex items-center justify-center rounded-full px-2.5 sm:px-4 h-8 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+              className={`inline-flex items-center justify-center rounded-full px-2 sm:px-4 h-8 text-[11px] sm:text-sm font-semibold transition-all whitespace-nowrap ${
                 isAttention ? "bg-[#EE661D] text-white shadow-sm" : "text-gray-500 hover:text-gray-700"
               }`}
             >
-              Attention
+              <span className="sm:hidden">Attn</span>
+              <span className="hidden sm:inline">Attention</span>
             </Link>
           </div>
         </div>

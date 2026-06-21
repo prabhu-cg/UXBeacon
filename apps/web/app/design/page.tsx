@@ -27,10 +27,11 @@ export default function DesignPage() {
           </div>
 
           <div className="relative mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#EE661D]/20 bg-[#FFF7E3] px-4 py-1.5">
-              <ImageIcon className="h-3.5 w-3.5 text-[#EE661D]" />
+            <div className="mb-6 inline-flex max-w-full items-center gap-2 rounded-full border border-[#EE661D]/20 bg-[#FFF7E3] px-4 py-1.5">
+              <ImageIcon className="h-3.5 w-3.5 shrink-0 text-[#EE661D]" />
               <span className="text-xs font-semibold text-[#EE661D] tracking-wide uppercase">
-                Screenshot Analysis · No live site needed
+                <span className="sm:hidden">Screenshot Analysis</span>
+                <span className="hidden sm:inline">Screenshot Analysis · No live site needed</span>
               </span>
             </div>
 
