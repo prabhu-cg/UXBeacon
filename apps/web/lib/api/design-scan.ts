@@ -18,7 +18,8 @@ export async function uploadDesignScan(file: File): Promise<DesignScanInitRespon
 
 export async function getDesignScan(scanId: string): Promise<DesignScanResult> {
   const res = await fetchWithRetry(`${API_BASE_URL}/api/design-scans/${scanId}`);
-  if (!res.ok) throw new Error(`Failed to fetch design scan (${res.status})`);
+  if (res.status === 404) throw new Error("Scan not found — the server may have restarted. Please upload your screenshot again.");
+  if (!res.ok) throw new Error(`Server error (${res.status}) — please try again.`);
   return res.json();
 }
 
@@ -45,7 +46,8 @@ export async function pollDesignScanUntilComplete(
         }
         setTimeout(poll, intervalMs);
       } catch (err) {
-        if (attempts < maxAttempts) {
+        const isNetworkError = err instanceof TypeError;
+        if (isNetworkError && attempts < maxAttempts) {
           setTimeout(poll, intervalMs * 2);
         } else {
           reject(err);

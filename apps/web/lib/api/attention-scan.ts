@@ -18,7 +18,8 @@ export async function uploadAttentionScan(file: File): Promise<AttentionScanInit
 
 export async function getAttentionScan(scanId: string): Promise<AttentionScanResult> {
   const res = await fetchWithRetry(`${API_BASE_URL}/api/attention-scans/${scanId}`);
-  if (!res.ok) throw new Error(`Failed to fetch attention scan (${res.status})`);
+  if (res.status === 404) throw new Error("Scan not found — the server may have restarted. Please upload your screenshot again.");
+  if (!res.ok) throw new Error(`Server error (${res.status}) — please try again.`);
   return res.json();
 }
 
@@ -45,8 +46,9 @@ export async function pollAttentionScanUntilComplete(
         }
         setTimeout(poll, intervalMs);
       } catch (err) {
-        // Transient network error — retry instead of aborting the poll
-        if (attempts < maxAttempts) {
+        // Only retry on network-level failures (TypeError); HTTP errors (404, 500) reject immediately
+        const isNetworkError = err instanceof TypeError;
+        if (isNetworkError && attempts < maxAttempts) {
           setTimeout(poll, intervalMs * 2);
         } else {
           reject(err);
