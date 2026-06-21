@@ -165,8 +165,8 @@ export function ScanResultsView({ result }: Props) {
         {/* Detail tabs */}
         <Tabs value={tab} onValueChange={setTab}>
           {/* Underline tab bar */}
-          <div className="mb-6 border-b border-gray-200 bg-white rounded-t-xl">
-            <div className="flex">
+          <div className="mb-6 border-b border-gray-200 bg-white rounded-t-xl overflow-x-auto">
+            <div className="flex min-w-max">
               {[
                 { value: "overview",      label: "Overview",      icon: LayoutDashboard, score: null },
                 { value: "heuristics",    label: "Heuristics",    icon: ListChecks,      score: health.heuristics },
@@ -180,7 +180,7 @@ export function ScanResultsView({ result }: Props) {
                   <button
                     key={value}
                     onClick={() => setTab(value)}
-                    className={`flex-1 flex flex-col items-center justify-center gap-1 py-4 px-2 border-b-2 transition-all ${
+                    className={`flex flex-col items-center justify-center gap-1 py-4 px-3 border-b-2 transition-all min-w-[72px] ${
                       active
                         ? "border-[#EE661D] text-[#EE661D]"
                         : "border-transparent text-gray-400 hover:text-gray-600 hover:border-gray-300"

@@ -66,7 +66,7 @@ export function UrlAnalyzer({ inverted = false }: { inverted?: boolean }) {
             inputMode="url"
             autoComplete="url"
             spellCheck={false}
-            placeholder="Enter any website URL to analyse..."
+            placeholder="Enter a website URL..."
             value={url}
             onChange={(e) => {
               setUrl(e.target.value);
