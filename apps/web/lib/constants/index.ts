@@ -1,4 +1,9 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+// Production: calls go to /api/* (same origin) and are edge-proxied to Render — no CORS.
+// Development: calls go directly to the local API server.
+export const API_BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? ""
+    : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export const GUEST_SCAN_LIMIT = 3;
 export const GUEST_PAGE_LIMIT = 25;
