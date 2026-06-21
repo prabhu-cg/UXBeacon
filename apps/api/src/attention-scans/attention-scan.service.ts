@@ -48,9 +48,22 @@ export class AttentionScanService {
     return scan;
   }
 
-  private async runAnalysis(id: string, buffer: Buffer): Promise<void> {
+  private async runAnalysis(id: string, rawBuffer: Buffer): Promise<void> {
     this.store.update(id, { status: 'analyzing' });
     this.logger.log(`[${id}] Starting attention analysis`);
+
+    // Cap to 1920 px wide before any processing to prevent OOM on large retina screenshots
+    const MAX_W = 1920;
+    const rawMeta = await sharp(rawBuffer).metadata();
+    const rawW = rawMeta.width ?? 800;
+    let buffer = rawBuffer;
+    if (rawW > MAX_W) {
+      this.logger.log(`[${id}] Downscaling from ${rawW}px to ${MAX_W}px wide`);
+      buffer = await sharp(rawBuffer)
+        .resize(MAX_W, undefined, { fit: 'inside', withoutEnlargement: true })
+        .png()
+        .toBuffer();
+    }
 
     const meta = await sharp(buffer).metadata();
     const width  = meta.width  ?? 800;

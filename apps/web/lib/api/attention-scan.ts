@@ -46,9 +46,9 @@ export async function pollAttentionScanUntilComplete(
         }
         setTimeout(poll, intervalMs);
       } catch (err) {
-        // Only retry on network-level failures (TypeError); HTTP errors (404, 500) reject immediately
-        const isNetworkError = err instanceof TypeError;
-        if (isNetworkError && attempts < maxAttempts) {
+        const msg = err instanceof Error ? err.message : "";
+        const isTransient = err instanceof TypeError || /502|503/.test(msg);
+        if (isTransient && attempts < maxAttempts) {
           setTimeout(poll, intervalMs * 2);
         } else {
           reject(err);
