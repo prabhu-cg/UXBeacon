@@ -1,8 +1,11 @@
 import { NestFactory } from '@nestjs/core';
+import * as compression from 'compression';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger: ['log', 'warn', 'error'] });
+
+  app.use(compression());
 
   app.enableCors({
     origin: (origin, callback) => {

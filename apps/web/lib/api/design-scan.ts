@@ -1,10 +1,11 @@
 import { API_BASE_URL } from "@/lib/constants";
+import { fetchWithRetry } from "./fetch-with-retry";
 import type { DesignScanResult, DesignScanInitResponse } from "@uxbeacon/shared-types";
 
 export async function uploadDesignScan(file: File): Promise<DesignScanInitResponse> {
   const form = new FormData();
   form.append("file", file);
-  const res = await fetch(`${API_BASE_URL}/api/design-scans`, {
+  const res = await fetchWithRetry(`${API_BASE_URL}/api/design-scans`, {
     method: "POST",
     body: form,
   });
@@ -16,7 +17,7 @@ export async function uploadDesignScan(file: File): Promise<DesignScanInitRespon
 }
 
 export async function getDesignScan(scanId: string): Promise<DesignScanResult> {
-  const res = await fetch(`${API_BASE_URL}/api/design-scans/${scanId}`);
+  const res = await fetchWithRetry(`${API_BASE_URL}/api/design-scans/${scanId}`);
   if (!res.ok) throw new Error(`Failed to fetch design scan (${res.status})`);
   return res.json();
 }
@@ -44,7 +45,11 @@ export async function pollDesignScanUntilComplete(
         }
         setTimeout(poll, intervalMs);
       } catch (err) {
-        reject(err);
+        if (attempts < maxAttempts) {
+          setTimeout(poll, intervalMs * 2);
+        } else {
+          reject(err);
+        }
       }
     };
     poll();

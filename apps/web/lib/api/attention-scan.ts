@@ -1,10 +1,11 @@
 import { API_BASE_URL } from "@/lib/constants";
+import { fetchWithRetry } from "./fetch-with-retry";
 import type { AttentionScanResult, AttentionScanInitResponse } from "@uxbeacon/shared-types";
 
 export async function uploadAttentionScan(file: File): Promise<AttentionScanInitResponse> {
   const form = new FormData();
   form.append("file", file);
-  const res = await fetch(`${API_BASE_URL}/api/attention-scans`, {
+  const res = await fetchWithRetry(`${API_BASE_URL}/api/attention-scans`, {
     method: "POST",
     body: form,
   });
@@ -16,7 +17,7 @@ export async function uploadAttentionScan(file: File): Promise<AttentionScanInit
 }
 
 export async function getAttentionScan(scanId: string): Promise<AttentionScanResult> {
-  const res = await fetch(`${API_BASE_URL}/api/attention-scans/${scanId}`);
+  const res = await fetchWithRetry(`${API_BASE_URL}/api/attention-scans/${scanId}`);
   if (!res.ok) throw new Error(`Failed to fetch attention scan (${res.status})`);
   return res.json();
 }
@@ -44,7 +45,12 @@ export async function pollAttentionScanUntilComplete(
         }
         setTimeout(poll, intervalMs);
       } catch (err) {
-        reject(err);
+        // Transient network error — retry instead of aborting the poll
+        if (attempts < maxAttempts) {
+          setTimeout(poll, intervalMs * 2);
+        } else {
+          reject(err);
+        }
       }
     };
     poll();
