@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Upload, ImageIcon, Loader2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,21 @@ export function ImageUploader() {
     setFile(f);
     setPreview(URL.createObjectURL(f));
   }, []);
+
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      const item = Array.from(e.clipboardData?.items ?? []).find(
+        (i) => i.kind === "file" && i.type.startsWith("image/"),
+      );
+      if (!item) return;
+      const f = item.getAsFile();
+      if (!f) return;
+      const named = new File([f], "pasted-screenshot.png", { type: f.type || "image/png" });
+      accept(named);
+    }
+    document.addEventListener("paste", onPaste);
+    return () => document.removeEventListener("paste", onPaste);
+  }, [accept]);
 
   const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -98,7 +113,7 @@ export function ImageUploader() {
               <p className="text-base font-semibold text-[#333333]">
                 Drop your screenshot here
               </p>
-              <p className="mt-1 text-sm text-gray-400">or click to browse</p>
+              <p className="mt-1 text-sm text-gray-400">or click to browse · or paste (⌘V)</p>
             </div>
             <p className="text-xs text-gray-400">PNG, JPG, WEBP · Max {MAX_MB} MB</p>
           </div>
